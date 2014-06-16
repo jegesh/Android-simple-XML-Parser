@@ -1,4 +1,4 @@
-package com.example.learningsqlite;
+// package com.you.yourpackage
 
 import java.io.IOException;
 import java.util.LinkedList;
