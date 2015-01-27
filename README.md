@@ -6,7 +6,7 @@ Simple class for pulling out ids of views from an Android XML layout file
 Instructions
 ------------
 
-The class only contains a single constructor and a single method.  The method takes a parameter of type `Context`, presumably the class will be initialized from within an Android Activity, in which case `this` is the suggested value for the parameter.
+The class only contains a single constructor and a single method.  The method takes a parameter of type `Context`.  Presumably the class will be initialized from within an Android Activity, in which case `this` is the suggested value for the parameter (if the code is in a `Fragment` then the `getActivity` method should be used).
 
 The method, `getElementIds()`, takes two parameters: the resource ID of the layout file to be parsed, and a `String` which is the name of the View type requested.  A number of View type names are defined as class constants.  The method returns an `int` Array object which contains the id's of all the Views of the requested type in the file, in order of appearance in the XML file.  Dynamically added Views will not be scanned, because the parser reads the original layout file.  On the other hand, if you're adding Views dynamically, you ought to have no trouble getting their id's.  If the View's 'id' attribute is not explicitly defined in the layout file, even though the operating system necessarily assigns it an id, this method can not access it, and returns 0 instead for that particular View.
 
@@ -30,18 +30,19 @@ This is code applicable to a simple verification activity, where the user has to
     		} catch (IOException e) {
     			e.printStackTrace();
     		}
-    		boolean allChecked = true;
-    		for(int id:checkboxes){
-    			CheckBox cbox = (CheckBox)findViewById(id);
-    			if(!cbox.isChecked())
-    				allChecked = false;
-    		}
-    		if(allChecked){
-    			Intent intent = new Intent(this,TourMainMenuActivity.class);
-    			startActivity(intent);
-    		}else{
-    			TextView message = (TextView)findViewById(R.id.message_unprepared);
-    			message.setVisibility(View.VISIBLE);
+    		if(checkboxes != null){
+        		boolean allChecked = true;
+        		for(int id:checkboxes){
+        			CheckBox cbox = (CheckBox)findViewById(id);
+        			if(!cbox.isChecked())
+        				allChecked = false;
+        		}
+        		if(allChecked){
+        			Intent intent = new Intent(this,TourMainMenuActivity.class);
+        			startActivity(intent);
+        		}else{
+        			TextView message = (TextView)findViewById(R.id.message_unprepared);
+        			message.setVisibility(View.VISIBLE);
+        		}
     		}
     	}
-
